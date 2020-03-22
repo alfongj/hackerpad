@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Hackerpad</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet" type='text/css'>
+    <style media="screen">
+      *:focus {
+        outline: none;
+      }
+
+      html, body, #pad {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      #pad {
+        font-family: 'Roboto Mono', monospace;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="pad" contenteditable="true" autofocus="autofocus"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+    <script src="js/firebase-config.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+  </body>
+</html>
