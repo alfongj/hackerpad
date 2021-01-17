@@ -95,7 +95,7 @@
                               .toISOString()
                               .split("T")[0];
           note = userNotes.doc(dateString);
-          location.pathname = note.id;
+          history.replaceState(null, '', note.id);
         }
         l(`D: Operating on note ${note.id}`);
 
