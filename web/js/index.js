@@ -90,7 +90,11 @@
         if (location.pathname && location.pathname.length > 1) {
           note = userNotes.doc(location.pathname.substr(1));
         } else {
-          note = userNotes.doc();
+          let date = new Date();
+          let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+                              .toISOString()
+                              .split("T")[0];
+          note = userNotes.doc(dateString);
           location.pathname = note.id;
         }
         l(`D: Operating on note ${note.id}`);
