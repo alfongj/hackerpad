@@ -59,6 +59,24 @@
 
   // TODO: clean up...
   const main = function() {
+    // DOM references
+    const pad = document.getElementById('pad');
+    const padTitleInputText = document.getElementById('pad-title');
+
+    // Set title
+    let padTitle;
+    if (location.pathname && location.pathname.length > 1) {
+      padTitle = decodeURI(location.pathname.substr(1));
+    } else { // Default to today's date in YYYY-MM-DD format
+      let date = new Date();
+      let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+                          .toISOString()
+                          .split("T")[0];
+      padTitle = dateString;
+      history.replaceState(null, '', dateString);
+    }
+    padTitleInputText.value = padTitle;
+
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -76,27 +94,15 @@
     // Check for authentication state changes
     firebase.auth().onAuthStateChanged(function(user) {
       l(`D: Auth state changed to user signed in: ${!!user}`);
-      if (user) {
+      if (user) { // User is signed in.
         changeFavicon(SIGNED_IN_FAVICON_URL);
 
-        // User is signed in.
-        const pad = document.getElementById('pad');
         const userNotes = db.collection(`users/${user.uid}/notes`);
 
         // TODO figure out where to move this
         // listNotes(userNotes);
 
-        let note;
-        if (location.pathname && location.pathname.length > 1) {
-          note = userNotes.doc(location.pathname.substr(1));
-        } else {
-          let date = new Date();
-          let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
-                              .toISOString()
-                              .split("T")[0];
-          note = userNotes.doc(dateString);
-          history.replaceState(null, '', note.id);
-        }
+        let note = userNotes.doc(encodeURI(padTitle));
         l(`D: Operating on note ${note.id}`);
 
         note.onSnapshot(function(snapshot) {
