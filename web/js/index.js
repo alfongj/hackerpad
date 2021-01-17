@@ -87,11 +87,11 @@
         // listNotes(userNotes);
 
         let note;
-        if (location.hash && location.hash.length > 1) {
-          note = userNotes.doc(location.hash.substr(1));
+        if (location.pathname && location.pathname.length > 1) {
+          note = userNotes.doc(location.pathname.substr(1));
         } else {
           note = userNotes.doc();
-          location.hash = note.id;
+          location.pathname = note.id;
         }
         l(`D: Operating on note ${note.id}`);
 
