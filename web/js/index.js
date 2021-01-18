@@ -60,7 +60,8 @@
   // TODO: clean up...
   const main = function() {
     // DOM references
-    const pad = document.getElementById('pad');
+    const padDOMElem = document.getElementById('pad');
+    const pad = new RichTextArea(padDOMElem);
     const padTitleInputText = document.getElementById('pad-title');
 
     // Set title
@@ -106,10 +107,10 @@
         l(`D: Operating on note ${note.id}`);
 
         note.onSnapshot(function(snapshot) {
-          var oldNoteContent = pad.innerHTML;
+          var oldNoteContent = pad.value;
           var newNoteContent = snapshot.get('content');
           if (oldNoteContent != newNoteContent) {
-            pad.innerHTML = newNoteContent ? newNoteContent : '';
+            pad.value = newNoteContent ? newNoteContent : '';
           }
         }, function (errorObject) {
           l('E: The read failed: ' + errorObject.code);
@@ -117,12 +118,10 @@
 
         const debouncedNoteSave = debounce(function() {
           l(`D: Updating note ${note.id}`);
-          note.set({content: pad.innerHTML}, {merge: true});
+          note.set({content: pad.value}, {merge: true});
         }, 1000);
 
-        ['input', 'keyup', 'paste'].forEach( event => {
-          pad.addEventListener(event, debouncedNoteSave, false);
-        });
+        pad.addContentChangedListener(debouncedNoteSave);
 
         pad.focus();
       } else {

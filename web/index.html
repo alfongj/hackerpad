@@ -12,16 +12,22 @@
       }
 
       html, body, #pad-title-cont, #pad {
-        width: 100%;
         margin: 0;
         box-sizing: border-box;
       }
 
       html, body {
         height: 100%;
+        width: 100%;
+      }
+
+      body {
+        display: flex;
+        flex-flow: column;
       }
 
       #pad-title-cont {
+        flex: 0 1 auto;
         padding: 8px;
       }
 
@@ -34,21 +40,45 @@
         font-size: xxx-large;
       }
 
+      #pad-cont {
+        flex: 1 1 auto;
+        padding: 8px;
+      }
+
       #pad {
+        width: 100%;
+        height: 100%;
+
+        border: none;
+        overflow: auto;
+        outline: none;
+
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+
+        resize: none; /*remove the resize handle on the bottom right*/
+
+        border-radius: 5px;
+        background: #81676714;
+
         padding: 8px;
         font-family: 'Lucida Console', 'Monaco', monospace;
-        font-size: medium;
+        font-size: small;
+        tab-size: 2;
       }
+
     </style>
   </head>
   <body>
     <h1 id="pad-title-cont"><input id="pad-title" type="text" value="" disabled="true"/></h1>
-    <div id="pad" contenteditable="true" autofocus="autofocus"></div>
+    <div id="pad-cont"><textarea id="pad" autofocus="autofocus"></textarea></div>
 
     <script src="/__/firebase/8.2.3/firebase-app.js"></script>
     <script src="/__/firebase/8.2.3/firebase-auth.js"></script>
     <script src="/__/firebase/8.2.3/firebase-firestore.js"></script>
     <script src="js/firebase-config.js" type="text/javascript"></script>
+    <script src="js/rich-text-area.js" type="text/javascript"></script>
     <script src="js/index.js" type="text/javascript"></script>
   </body>
 </html>
